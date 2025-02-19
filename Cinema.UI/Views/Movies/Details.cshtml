@@ -1,0 +1,32 @@
+﻿@model Cinema.BLL.DTOs.MovieDto
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+
+<img src="@Model.PosterUrl" alt="Постер фільму" style="max-width: 300px;">
+<p><strong>Опис:</strong> @Model.Description</p>
+<p><strong>Режисер:</strong> @Model.Director</p>
+<p><strong>Жанр:</strong> @string.Join(", ", Model.Genre)</p>
+<p><strong>Рік:</strong> @Model.ReleaseYear</p>
+<p><strong>Рейтинг:</strong> @Model.Rating</p>
+<p><strong>Актори:</strong> @Model.Actors</p>
+
+<a asp-controller="Movies" asp-action="Index" class="btn btn-secondary">Назад до списку</a>
+
+@{
+    var embedUrl = string.IsNullOrEmpty(Model.TrailerUrl)
+        ? string.Empty
+        : Model.TrailerUrl.Replace("watch?v=", "embed/");
+}
+
+@if (!string.IsNullOrEmpty(embedUrl))
+{
+    <h3>Трейлер</h3>
+    <iframe width="560" height="315" src="@embedUrl" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+}

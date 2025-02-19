@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Cinema.BLL.DTOs.MovieDto>
+
+@{
+    ViewData["Title"] = "Список фільмів";
+}
+
+<h2>Список фільмів</h2>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="@movie.PosterUrl" class="card-img-top" alt="Постер фільму">
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
+                    <p class="card-text">@movie.Description</p>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Докладніше</a>
+                    <a asp-controller="Bookings" asp-action="Create" asp-route-movieId="@movie.Id" class="btn btn-warning">Забронювати</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

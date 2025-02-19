@@ -1,0 +1,58 @@
+﻿@model Cinema.BLL.Models.AdminViewModel
+
+<h2>Адмін-панель</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Додати фільм</h4>
+        <form method="post" asp-action="CreateMovie">
+            <div class="mb-3">
+                <label for="tmdbId" class="form-label">TMDb ID</label>
+                <input type="number" class="form-control" name="tmdbId" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Додати фільм</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Додати сеанс</h4>
+        <form method="post" asp-action="CreateSession">
+            <div class="mb-3">
+                <label for="TmdbId" class="form-label">TMDb ID фільму</label>
+                <input type="number" class="form-control" name="TmdbId" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="HallId" class="form-label">Зал</label>
+                <select class="form-control" name="HallId" required>
+                    @foreach (var hall in Model.Halls)
+                    {
+                        <option value="@hall.Id">@hall.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="StartTime" class="form-label">Дата і час</label>
+                <input type="datetime-local" class="form-control" name="StartTime" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="Price" class="form-label">Ціна</label>
+                <input type="number" step="0.01" class="form-control" name="Price" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Додати сеанс</button>
+        </form>
+    </div>
+</div>

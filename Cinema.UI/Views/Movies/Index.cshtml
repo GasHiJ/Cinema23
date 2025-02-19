@@ -1,0 +1,45 @@
+﻿@model Cinema.BLL.Models.MovieFilterModel
+
+@{
+    ViewData["Title"] = "Список фільмів";
+}
+
+<h2>Список фільмів</h2>
+
+<form method="get" asp-action="Index">
+    <label for="genre">Жанри:</label>
+    <select name="genre">
+        <option value="">Всі жанри</option>
+        @foreach (var genre in Model.Genres)
+        {
+            <option value="@genre" selected="@(genre == Model.SelectedGenre ? "selected" : "")">@genre</option>
+        }
+    </select>
+
+    <label>
+        <input type="checkbox" name="hasSessions" value="true" @(Model.HasSessions ? "checked" : "") />
+        Тільки з сеансами
+    </label>
+
+    <button type="submit">Застосувати</button>
+    <a href="@Url.Action("Index", "Movies")" class="btn btn-secondary">Скинути фільтри</a>
+</form>
+
+<div class="row">
+    @foreach (var movie in Model.Movies)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="@movie.PosterUrl" class="card-img-top" alt="Постер фільму">
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
+                    <p class="card-text">@movie.Description</p>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Докладніше</a>
+                    <a asp-controller="Bookings" asp-action="Index" asp-route-movieTitle="@movie.Title" class="btn btn-warning">
+                        Забронювати
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

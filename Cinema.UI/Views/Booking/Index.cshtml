@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+@model IEnumerable<Cinema.BLL.DTOs.SessionDto>
+
+<h2>Сесії</h2>
+
+<form method="get" action="@Url.Action("Index", "Bookings")">
+    <label for="movieTitle">Фільм:</label>
+    <input type="text" name="movieTitle" id="movieTitle" value="@Context.Request.Query["movieTitle"]" />
+
+    <label for="startDate">Дата початку:</label>
+    <input type="date" name="startDate" id="startDate" value="@Context.Request.Query["startDate"]" />
+
+    <button type="submit">Фільтрувати</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Фільм</th>
+            <th>Час</th>
+            <th>Зал</th>
+            <th>Ціна</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var session in Model)
+        {
+            <tr>
+                <td>@session.MovieTitle</td>
+                <td>@session.StartTime</td>
+                <td>@session.HallName</td>
+                <td>@session.Price</td>
+                <td>
+                    <a asp-controller="Bookings" asp-action="Create" asp-route-sessionId="@session.Id" class="btn btn-primary">
+                        Обрати місце
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
